@@ -11,6 +11,7 @@
 
 .content {
     line-height: 1.6;
+    scroll-behavior: smooth;
 }
 
 .content p {
@@ -33,4 +34,11 @@
 .content img {
     max-width: 100%;
     height: auto;
+}
+
+
+/* 添加锚点目标的偏移，防止被固定导航遮挡 */
+
+.content h2 {
+    scroll-margin-top: 2rem;
 }

@@ -1,6 +1,8 @@
 .container {
     display: flex;
     min-height: 100vh;
+    margin-left: 270px; /* 确保内容不被侧边栏覆盖 */
+    padding: 20px;
 }
 
 .sidebar {
@@ -8,24 +10,29 @@
     background-color: #f5f5f5;
     padding: 20px;
     border-right: 1px solid #e0e0e0;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 .sidebar nav ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .sidebar nav li {
     margin: 10px 0;
 }
 
-.sidebar nav a {
+.link {
     text-decoration: none;
     color: #333;
     transition: color 0.3s;
+    display: inline-block;
 }
 
-.sidebar nav a:hover {
+.link:hover {
     color: #0070f3;
 }
 
@@ -37,4 +44,55 @@
 .main {
     flex: 1;
     padding: 20px;
+}
+
+.navItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.navItem:hover {
+    background-color: #e8e8e8;
+}
+
+.hasChildren {
+    padding-right: 24px;
+    position: relative;
+}
+
+.arrow {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #666;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    transition: transform 0.2s ease;
+}
+
+.arrow.expanded {
+    transform: translateY(-50%) rotate(-180deg);
+}
+
+.subNav {
+    margin-left: 20px !important;
+    border-left: 2px solid #e0e0e0;
+    padding-left: 10px !important;
+    margin-top: 4px;
+}
+
+.subNav li {
+    margin: 8px 0 !important;
+}
+
+.subNav .link {
+    font-size: 0.9rem;
 }

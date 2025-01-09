@@ -1,0 +1,28 @@
+.article {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.article h3 {
+    margin: 0 0 0.5rem 0;
+}
+
+.article h3 a {
+    color: #0070f3;
+    text-decoration: none;
+}
+
+.article h3 a:hover {
+    text-decoration: underline;
+}
+
+.article time {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.article p {
+    margin: 0.5rem 0;
+    line-height: 1.5;
+}
