@@ -1,22 +1,40 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs')
+const path = require('path')
 
-const filePath = path.join(__dirname, '../posts/Node.md');
+function cleanBase64Images(filePath) {
+    try {
+        // 读取文件内容
+        let content = fs.readFileSync(filePath, 'utf8')
 
-fs.readFile(filePath, 'utf8', (err, data) => {
-    if (err) {
-        console.error('Error reading file:', err);
-        return;
+        // 匹配 base64 图片格式
+        const base64Pattern = /!\[.*?\]\(data:image\/[^;]+;base64,[^\)]+\)/g
+
+        // 删除所有匹配的 base64 图片
+        content = content.replace(base64Pattern, '')
+
+        // 写回文件
+        fs.writeFileSync(filePath, content, 'utf8')
+
+        console.log(`已清理文件: ${filePath}`)
+    } catch (error) {
+        console.error(`处理文件时出错 ${filePath}:`, error)
     }
+}
 
-    const cleanedData = data.replace(/!\[\]\(data:image\/png;base64,[^\)]*\)/g, '');
+function processDirectory(dir) {
+    const files = fs.readdirSync(dir)
 
-    fs.writeFile(filePath, cleanedData, 'utf8', (err) => {
-        if (err) {
-            console.error('Error writing file:', err);
-            return;
+    files.forEach((file) => {
+        const fullPath = path.join(dir, file)
+
+        if (fs.statSync(fullPath).isDirectory()) {
+            processDirectory(fullPath)
+        } else if (file.endsWith('.md')) {
+            cleanBase64Images(fullPath)
         }
+    })
+}
 
-        console.log('File cleaned successfully.');
-    });
-});
+// 处理 posts 目录下的所有 markdown 文件
+const postsDir = path.join(__dirname, '../posts')
+processDirectory(postsDir)

@@ -1,7 +1,8 @@
 .container {
     display: flex;
     min-height: 100vh;
-    margin-left: 270px; /* 确保内容不被侧边栏覆盖 */
+    margin-left: 270px;
+    /* 确保内容不被侧边栏覆盖 */
     padding: 20px;
 }
 
@@ -14,6 +15,7 @@
     top: 0;
     left: 0;
     height: 100%;
+    overflow: auto;
 }
 
 .sidebar nav ul {
@@ -96,4 +98,8 @@
 
 .subNav .link {
     font-size: 0.9rem;
+}
+
+.sidebar nav {
+    padding-bottom: 40px;
 }

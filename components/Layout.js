@@ -5,9 +5,21 @@ import { useRouter } from 'next/router'
 
 export default function Layout({ posts = [], children }) {
   const router = useRouter()
-  const [expandedItems, setExpandedItems] = useState({
-    '/posts/Node': true,
-  })
+  const [expandedItems, setExpandedItems] = useState({})
+
+  useEffect(() => {
+    // 从 localStorage 恢复导航条展开状态
+    const savedExpandedItems = localStorage.getItem('expandedItems')
+    if (savedExpandedItems) {
+      setExpandedItems(JSON.parse(savedExpandedItems))
+    }
+  }, [])
+
+  useEffect(() => {
+    // 当 expandedItems 变化时，保存到 localStorage
+    localStorage.setItem('expandedItems', JSON.stringify(expandedItems))
+  }, [expandedItems])
+
   const [navItems, setNavItems] = useState([
     {
       title: '首页',
@@ -94,19 +106,16 @@ export default function Layout({ posts = [], children }) {
                 {item.subItems && expandedItems[item.path] && (
                   <ul className={styles.subNav}>
                     {item.subItems.map((subItem) => {
-                        const isActiveSubItem = decodeURIComponent(router.asPath) === subItem.path
+                      const isActiveSubItem = decodeURIComponent(router.asPath) === subItem.path
                       return (
                         <li key={subItem.path}>
                           <p
                             onClick={(e) => {
                               e.preventDefault()
-                              console.log('subItem.path', subItem.path)
                               router.push(subItem.path)
                             }}
                             className={`${styles.link} ${
-                                isActiveSubItem
-                                ? styles.active
-                                : ''
+                              isActiveSubItem ? styles.active : ''
                             }`}
                           >
                             {subItem.title}

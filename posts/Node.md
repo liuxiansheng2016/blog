@@ -441,7 +441,7 @@ WebSocket 通信：使用 ws 库实现全双工的 WebSocket 通信。
 - Async/Await
 - 流（Streams）对于需要逐步处理大量数据的情况，Node.js 提供了流的概念。流是一种抽象接口，用于处理流动的数据。你可以监听流的不同事件（如 data、end、error）来逐步处理数据或响应流的状态变化
 
-### 事件循环
+## Eventloop
 
 1. 单线程：Node.js 运行在一个单线程上，这意味着所有 JavaScript 代码都在同一个线程中执行。
 2. 异步 I/O：Node.js 使用异步 I/O 操作来处理耗时任务，如文件系统操作、网络请求等，这些操作不会阻塞主线程。
