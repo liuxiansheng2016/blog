@@ -76,7 +76,7 @@ export default function Layout({ posts = [], children }) {
     <div className={styles.container}>
       <aside className={styles.sidebar}>
         <nav>
-          <h2>博客导航</h2>
+          <h2>笔记导航</h2>
           <ul>
             {navItems.map((item) => (
               <li key={item.path}>

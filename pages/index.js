@@ -7,7 +7,7 @@ import { getSortedPostsData } from "../lib/markdown";
 export default function Home({ allPostsData }) {
   return (
     <Layout posts={allPostsData}>
-      <h1> 这是我的学习笔记， 仅作参考 </h1>{" "}
+      <h1> 这是我的学习笔记，仅作参考，因为还有一些代码截图没有导入进来，所以内容并不完整 </h1>{" "}
       <div>
         <h2> 最新笔记 </h2>{" "}
         {allPostsData.map(({ id, date, title, description }) => (
