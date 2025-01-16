@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 export default function Layout({ posts = [], children }) {
   const router = useRouter()
   const [expandedItems, setExpandedItems] = useState({})
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   useEffect(() => {
     // 从 localStorage 恢复导航条展开状态
@@ -72,34 +73,50 @@ export default function Layout({ posts = [], children }) {
     return router.asPath.startsWith(path)
   }
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen)
+  }
+
   return (
     <div className={styles.container}>
-      <aside className={styles.sidebar}>
+      <button
+        className={styles.menuButton}
+        onClick={toggleSidebar}
+        aria-label="Toggle menu"
+      >
+        <span className={styles.menuIcon}></span>
+      </button>
+
+      {isSidebarOpen && (
+        <div
+          className={`${styles.overlay} ${styles.active}`}
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
         <nav>
           <h2>笔记导航</h2>
           <ul>
             {navItems.map((item) => (
               <li key={item.path}>
                 <div
-                  className={`${styles.navItem} ${
-                    item.subItems ? styles.hasChildren : ''
-                  }`}
+                  className={`${styles.navItem} ${item.subItems ? styles.hasChildren : ''}`}
                   onClick={() => item.subItems && toggleSubNav(item.path)}
                 >
                   <Link
                     href={item.path}
-                    className={`${styles.link} ${
-                      isActive(item.path) ? styles.active : ''
-                    }`}
-                    onClick={(e) => e.stopPropagation()}
+                    className={`${styles.link} ${isActive(item.path) ? styles.active : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setIsSidebarOpen(false) // 关闭侧边栏
+                    }}
                   >
                     {item.title}
                   </Link>
                   {item.subItems && (
                     <span
-                      className={`${styles.arrow} ${
-                        expandedItems[item.path] ? styles.expanded : ''
-                      }`}
+                      className={`${styles.arrow} ${expandedItems[item.path] ? styles.expanded : ''}`}
                     />
                   )}
                 </div>
@@ -113,10 +130,9 @@ export default function Layout({ posts = [], children }) {
                             onClick={(e) => {
                               e.preventDefault()
                               router.push(subItem.path)
+                              setIsSidebarOpen(false) // 关闭侧边栏
                             }}
-                            className={`${styles.link} ${
-                              isActiveSubItem ? styles.active : ''
-                            }`}
+                            className={`${styles.link} ${isActiveSubItem ? styles.active : ''}`}
                           >
                             {subItem.title}
                           </p>
